@@ -1,4 +1,3 @@
-// app.js
 const express = require('express');
 const axios = require('axios');
 const cors = require('cors');
@@ -24,7 +23,6 @@ function isPrime(num) {
 }
 
 // Function to check if a number is perfect
-// A perfect number is a positive integer that is equal to the sum of its proper positive divisors
 function isPerfect(num) {
   if (num <= 1) return false;
   
@@ -42,7 +40,6 @@ function isPerfect(num) {
 }
 
 // Function to check if a number is an Armstrong number
-// An Armstrong number is a number that is equal to the sum of its own digits each raised to the power of the number of digits
 function isArmstrong(num) {
   const numStr = num.toString();
   const power = numStr.length;
@@ -50,17 +47,17 @@ function isArmstrong(num) {
   return sum === num;
 }
 
-// Function to calculate the sum of digits
+
 function digitSum(num) {
   return num.toString().split('').reduce((acc, digit) => acc + parseInt(digit), 0);
 }
 
-// Function to determine if a number is odd or even
+
 function getParityProperty(num) {
   return num % 2 === 0 ? "even" : "odd";
 }
 
-// Route for the number classification endpoint
+
 app.get('/api/classify-number', async (req, res) => {
   const { number } = req.query;
   
@@ -75,7 +72,7 @@ app.get('/api/classify-number', async (req, res) => {
   }
   
   try {
-    // Get fun fact from Numbers API
+    // Get fun fact
     let funFact;
     try {
       const response = await axios.get(`http://numbersapi.com/${parsedNumber}/math`);
@@ -100,7 +97,7 @@ app.get('/api/classify-number', async (req, res) => {
     // Add parity (odd/even)
     properties.push(getParityProperty(parsedNumber));
     
-    // Prepare response
+    // response
     const response = {
       number: parsedNumber,
       is_prime: isPrime(parsedNumber),
@@ -121,16 +118,12 @@ app.get('/api/classify-number', async (req, res) => {
   }
 });
 
-// Root route for API information
+
 app.get('/', (req, res) => {
-  res.send(`
-    <h1>Number Classification API</h1>
-    <p>Use the endpoint: <code>/api/classify-number?number=YOUR_NUMBER</code> to get information about a number.</p>
-    <p>Example: <a href="/api/classify-number?number=371">/api/classify-number?number=371</a></p>
-  `);
+  res.send("Welcome to Numbers API");
 });
 
-// Start the server
+
 app.listen(3800, () => {
   console.log(`Server running on port ${PORT}`);
 });
